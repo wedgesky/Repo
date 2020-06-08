@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<title>Billrow</title>
+
+{% block body %}
+    <h1>Billrow</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ billrow.id }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ billrow.description }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ billrow.quantity }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ billrow.amount }}</td>
+            </tr>
+            <tr>
+                <th>Vat</th>
+                <td>{{ billrow.vat }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ billrow.total }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('billrow_index') }}">back to list</a>
+
+    <a href="{{ path('billrow_edit', {'id': billrow.id}) }}">edit</a>
+
+    {{ include('billrow/_delete_form.html.twig') }}
+{% endblock %}

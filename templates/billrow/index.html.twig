@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<title>Billrow index</title>
+
+{% block body %}
+    <h1>Billrow index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Vat</th>
+                <th>Total</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for billrow in billrows %}
+            <tr>
+                <td>{{ billrow.id }}</td>
+                <td>{{ billrow.description }}</td>
+                <td>{{ billrow.quantity }}</td>
+                <td>{{ billrow.amount }}</td>
+                <td>{{ billrow.vat }}</td>
+                <td>{{ billrow.total }}</td>
+                <td>
+                    <a href="{{ path('billrow_show', {'id': billrow.id}) }}">show</a>
+                    <a href="{{ path('billrow_edit', {'id': billrow.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('billrow_new') }}">Create new</a>
+{% endblock %}

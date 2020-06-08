@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+
+<title>Edit Billrow</title>
+
+{% block body %}
+    <h1>Edit Billrow</h1>
+
+    {{ include('billrow/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('billrow_index') }}">back to list</a>
+
+    {{ include('billrow/_delete_form.html.twig') }}
+{% endblock %}
