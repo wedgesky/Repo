@@ -6,6 +6,7 @@ use App\Entity\Billrow;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BillrowType extends AbstractType
 {
@@ -17,7 +18,7 @@ class BillrowType extends AbstractType
             ->add('amount')
             ->add('vat')
             ->add('total')
-            ->add('idbill')
+            ->add('idbill', TextareaType::class, ['attr'=>array('readonly' => true)])
         ;
     }
 

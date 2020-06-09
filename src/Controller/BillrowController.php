@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Billrow;
+use App\Entity\Bill;
 use App\Form\BillrowType;
 use App\Repository\BillrowRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,10 +19,13 @@ class BillrowController extends Controller
     /**
      * @Route("/", name="billrow_index", methods={"GET"})
      */
-    public function index(BillrowRepository $billrowRepository): Response
+    public function index(BillrowRepository $billrowRepository, Request $request): Response
     {
+        $id = $request->request->get('id');
+        
         return $this->render('billrow/index.html.twig', [
-            'billrows' => $billrowRepository->findAll(),
+            'id' => $id,
+            'billrows' => $billrowRepository->findByIdBill($id),
         ]);
     }
 
@@ -30,7 +34,10 @@ class BillrowController extends Controller
      */
     public function new(Request $request): Response
     {
+        $id = $request->request->get('id');
+        
         $billrow = new Billrow();
+        $billrow->setIdbill($id);
         $form = $this->createForm(BillrowType::class, $billrow);
         $form->handleRequest($request);
 

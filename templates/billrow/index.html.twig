@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<title>Billrow index</title>
+<title>Billrow index </title>{{ id }}
 
 {% block body %}
     <h1>Billrow index</h1>
@@ -39,5 +39,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('billrow_new') }}">Create new</a>
+    <a href="{{ path('billrow_new',{'id': id }) }}">Create new</a>
 {% endblock %}

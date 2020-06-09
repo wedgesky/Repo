@@ -19,22 +19,22 @@ class BillrowRepository extends ServiceEntityRepository
         parent::__construct($registry, Billrow::class);
     }
 
-    // /**
-    //  * @return Billrow[] Returns an array of Billrow objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Billrow[] Returns an array of Billrow objects
+     */
+    
+    public function findByIdBill($value)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
+            ->andWhere('b.idbill = :val')
             ->setParameter('val', $value)
             ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
+            //->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Billrow
