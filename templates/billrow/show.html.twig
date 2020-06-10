@@ -3,7 +3,7 @@
 <title>Billrow</title>
 
 {% block body %}
-    <h1>Billrow</h1>
+    <h1>Billrow for bill {{ billrow.idbill.id }}</h1>
 
     <table class="table">
         <tbody>
@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('billrow_index') }}">back to list</a>
+    <a href="{{ path('billrow_index', {'id': billrow.idbill.id }) }}">back to list</a>
 
     <a href="{{ path('billrow_edit', {'id': billrow.id}) }}">edit</a>
 

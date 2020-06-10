@@ -7,5 +7,5 @@
 
     {{ include('billrow/_form.html.twig') }}
 
-    <a href="{{ path('billrow_index') }}">back to list</a>
+    <a href="{{ path('billrow_index', {'id': billrow.idbill.id }) }}">back to list</a>
 {% endblock %}

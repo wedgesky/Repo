@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Bill;
+use App\Entity\Billrow;
 use App\Form\BillType;
 use App\Repository\BillRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @Route("/bill")
@@ -83,12 +85,27 @@ class BillController extends Controller
      */
     public function delete(Request $request, Bill $bill): Response
     {
+        $billRows = $this->getDoctrine()
+        ->getRepository(Billrow::class)
+        ->findByIdBill($bill->getId());
+        
+        $errors = "";
+        
         if ($this->isCsrfTokenValid('delete'.$bill->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($bill);
-            $entityManager->flush();
-        }
 
+            if (count($billRows) > 0) {
+                $errors = "Violated constraint!!!";
+                
+                //return new JsonResponse(['data' => $errors]); 
+            } else {
+                           
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->remove($bill);
+                $entityManager->flush(); 
+
+            }
+        }
+        
         return $this->redirectToRoute('bill_index');
     }
 }

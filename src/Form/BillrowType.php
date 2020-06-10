@@ -18,7 +18,7 @@ class BillrowType extends AbstractType
             ->add('amount')
             ->add('vat')
             ->add('total')
-            ->add('idbill', TextareaType::class, ['attr'=>array('readonly' => true)])
+            //->add('idbill', TextareaType::class, ['attr'=>array('readonly' => true)])
         ;
     }
 

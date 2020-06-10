@@ -21,8 +21,8 @@ class BillrowController extends Controller
      */
     public function index(BillrowRepository $billrowRepository, Request $request): Response
     {
-        $id = $request->request->get('id');
-        
+        $id = $request->query->get('id');
+
         return $this->render('billrow/index.html.twig', [
             'id' => $id,
             'billrows' => $billrowRepository->findByIdBill($id),
@@ -34,19 +34,26 @@ class BillrowController extends Controller
      */
     public function new(Request $request): Response
     {
-        $id = $request->request->get('id');
+        $id = $request->query->get('id');
+
+        $entityManager = $this->getDoctrine()->getManager();
+        
+        $bill = $this->getDoctrine()->getRepository(Bill::class)->find($id);
+        
         
         $billrow = new Billrow();
-        $billrow->setIdbill($id);
+        $billrow->setIdbill($bill);
         $form = $this->createForm(BillrowType::class, $billrow);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+
             $entityManager->persist($billrow);
             $entityManager->flush();
+            
+            
 
-            return $this->redirectToRoute('billrow_index');
+            return $this->redirectToRoute('billrow_index', ['id' => $id]);
         }
 
         return $this->render('billrow/new.html.twig', [
@@ -72,15 +79,18 @@ class BillrowController extends Controller
     {
         $form = $this->createForm(BillrowType::class, $billrow);
         $form->handleRequest($request);
+        
+        $idBill = $billrow->getIdbill()->getId();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('billrow_index');
+            return $this->redirectToRoute('billrow_index', ['id' => $idBill ]);
         }
 
         return $this->render('billrow/edit.html.twig', [
             'billrow' => $billrow,
+            'id' => $idBill,
             'form' => $form->createView(),
         ]);
     }
@@ -90,12 +100,14 @@ class BillrowController extends Controller
      */
     public function delete(Request $request, Billrow $billrow): Response
     {
+        $id = $billrow->getIdbill()->getId();
+        
         if ($this->isCsrfTokenValid('delete'.$billrow->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($billrow);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('billrow_index');
+        return $this->redirectToRoute('billrow_index', ['id' => $id]);
     }
 }
