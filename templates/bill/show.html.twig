@@ -25,6 +25,13 @@
             </tr>
         </tbody>
     </table>
+            
+    {# read and display flash messages #}
+    {% for label, messages in app.flashes('error') %}
+        <div class="flash">
+            {{ messages }}
+        </div>
+    {% endfor %}
 
     <a href="{{ path('bill_index') }}">back to list</a>
     

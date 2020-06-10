@@ -96,6 +96,14 @@ class BillController extends Controller
             if (count($billRows) > 0) {
                 $errors = "Violated constraint!!!";
                 
+                $this->addFlash(
+                    'error', $errors
+                );
+                
+                return $this->render('bill/show.html.twig', [
+                    'bill' => $bill,
+                ]);
+                
                 //return new JsonResponse(['data' => $errors]); 
             } else {
                            
